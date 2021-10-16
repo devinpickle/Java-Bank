@@ -7,13 +7,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		// Start off with welcome and login options
+		// Create the bank object
 		Bank b = new Bank();
 		System.out.println("Welcome to the Bank!");
 		
-		
+		// Get user input
 		Scanner input = new Scanner(System.in);
 		
 		boolean validOption = false;
+		// Start first loop
 		do {
 		System.out.println("Please Select an Option:");
 		System.out.println("1) New User");
@@ -22,22 +24,24 @@ public class Main {
 		
 		if (option == 1) {
 			System.out.println("You've selected new user");
+			// Create array to hold new account id and balance
 			String[] inputs = createUser();
 			b.addUser(inputs[0], inputs[1]);
+			// Set the banks current active user
 			b.userLogin(inputs[0]);
 			//Show the newly added user
 			b.getUser(b.enteredID);
 			validOption = true;
 			
 		} else if (option == 2) {
-			System.out.println("You've selected Existing User\n This feature currently isn't working");
-			
+			System.out.println("You've selected Existing User");
+			// Get the user id for login
 			System.out.println("Enter your account ID");
             Scanner scannerID = new Scanner(System.in);
 			String enteredID = scannerID.nextLine();
 			
             if (b.getUser(enteredID)) {
-				// Create current user object
+				// Set banks current user
 				b.userLogin(enteredID);
 				validOption = true;
 			} else {
@@ -56,13 +60,14 @@ public class Main {
 		System.out.println("Select an option");
 		System.out.println("1) Withdraw");
 		System.out.println("2) Deposit");
-
+		// Create new input for which transaction option
 		int transaction = input.nextInt();
 		Scanner scannerFinish = new Scanner(System.in);
 		
 		if (transaction == 1) {
 			System.out.println("Withdrawal amount:");
 			float withdraw = input.nextFloat();
+			// Call the withdraw method
 			b.withdraw(withdraw, b.enteredID);
 			System.out.println("New Balance: " + b.getBalance(b.enteredID));
 			
