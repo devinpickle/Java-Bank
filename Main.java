@@ -9,38 +9,40 @@ public class Main {
 		// Start off with welcome and login options
 		Bank b = new Bank();
 		System.out.println("Welcome to the Bank!");
-		System.out.println("Please Select an Option:");
-		System.out.println("1) New User");
-		System.out.println("2) Existing User");
+		
 		
 		Scanner input = new Scanner(System.in);
 		
 		boolean validOption = false;
 		do {
+		System.out.println("Please Select an Option:");
+		System.out.println("1) New User");
+		System.out.println("2) Existing User");
 		int option = input.nextInt();
-		User u;
+		
 		if (option == 1) {
 			System.out.println("You've selected new user");
-			u = createUser();
-			b.addUser(u);
+			String[] inputs = createUser();
+			b.addUser(inputs[0], inputs[1]);
+			b.userLogin(inputs[0]);
+			//Show the newly added user
+			b.getUsers();
 			validOption = true;
 			
 		} else if (option == 2) {
 			System.out.println("You've selected Existing User\n This feature currently isn't working");
-			u = createDefaultUser("George", 12334);
-			b.addUser(u);
-			u = createDefaultUser("Henry", 673928);
-			b.addUser(u);
-			u = createDefaultUser("Claire", 8970233);
-			b.addUser(u);
 			
 			System.out.println("Enter your account ID");
             Scanner scannerID = new Scanner(System.in);
 			String enteredID = scannerID.nextLine();
 			
-            if (b.checkUserID(enteredID)) {
-                
-            }
+            if (b.getUser(enteredID)) {
+				// Create current user object
+				b.userLogin(enteredID);
+				validOption = true;
+			} else {
+				System.out.println("Not a valid ID");
+			}
 
 			
 			
@@ -49,11 +51,29 @@ public class Main {
 		}
 		} while (validOption == false);
 		
-		System.out.println("Success");
+		System.out.println("Select an option");
+		System.out.println("1) Withdraw");
+		System.out.println("2) Deposit");
+
+		int transaction = input.nextInt();
+		
+		if (transaction == 1) {
+			System.out.println("Withdrawal amount:");
+			float withdraw = input.nextFloat();
+			b.withdraw(withdraw, b.enteredID);
+			System.out.print("New Balance: " + b.getBalance(b.enteredID));
+
+		} else if (transaction == 2) {
+			System.out.println("Deposit amount:");
+			float deposit = input.nextFloat();
+			b.deposit(deposit, b.enteredID);
+			System.out.println("New Balance: " + b.getBalance(b.enteredID));
+		}
+
 
 	}
 	
-	public static User createUser() {
+	public static String[] createUser() {
 		// Create a new user object
 		//Get an account id for the user
 		Scanner input = new Scanner(System.in);
@@ -65,17 +85,13 @@ public class Main {
 		System.out.println();
 		System.out.println("Please enter an account balance: ");
 		float balance = input.nextFloat();
+		String[] inputs = new String[2];
+		inputs[0] = accountID;
+		inputs[1] = String.valueOf(balance);
 		
-		User u = new User(accountID, balance);
-		
-		return u;
+		return inputs;
 	}
-	public static User createDefaultUser(String defaultID, float defaultBalance) {
-		String accountID = defaultID;
-		float balance = defaultBalance;
-		User u = new User(accountID, balance);
-		return u;
-	}
+	
 	
 	
 //	try {

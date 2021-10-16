@@ -1,20 +1,14 @@
 
 public class User {
-	String accountID;
-	float accountBalance;
+	String enteredID;
 	
 	//Constructor
-	public User(String ID, float balance) {
-		accountID = ID;
-		accountBalance = balance;
+	public User(String ID) {
+		enteredID = ID;
 	}
 	
 	public String getID() {
-		return accountID;
-	}
-	
-	public float getBalance() {
-		return accountBalance;
+		return enteredID;
 	}
 	
 }
