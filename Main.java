@@ -26,7 +26,7 @@ public class Main {
 			b.addUser(inputs[0], inputs[1]);
 			b.userLogin(inputs[0]);
 			//Show the newly added user
-			b.getUsers();
+			b.getUser(b.enteredID);
 			validOption = true;
 			
 		} else if (option == 2) {
@@ -51,17 +51,22 @@ public class Main {
 		}
 		} while (validOption == false);
 		
+		boolean transactionDone = false;
+		do {
 		System.out.println("Select an option");
 		System.out.println("1) Withdraw");
 		System.out.println("2) Deposit");
 
 		int transaction = input.nextInt();
+		Scanner scannerFinish = new Scanner(System.in);
 		
 		if (transaction == 1) {
 			System.out.println("Withdrawal amount:");
 			float withdraw = input.nextFloat();
 			b.withdraw(withdraw, b.enteredID);
-			System.out.print("New Balance: " + b.getBalance(b.enteredID));
+			System.out.println("New Balance: " + b.getBalance(b.enteredID));
+			
+			
 
 		} else if (transaction == 2) {
 			System.out.println("Deposit amount:");
@@ -69,7 +74,13 @@ public class Main {
 			b.deposit(deposit, b.enteredID);
 			System.out.println("New Balance: " + b.getBalance(b.enteredID));
 		}
+		System.out.println("Finish (Y/N)? ");
+		String finish = scannerFinish.nextLine();
+		if (finish.equals("Y") | finish.equals("y")) {
+			transactionDone = true;
+		}
 
+	} while (transactionDone == false);
 
 	}
 	
